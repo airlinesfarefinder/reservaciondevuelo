@@ -1,0 +1,18 @@
+{
+  "name": "reservaciondevuelo",
+  "version": "1.0.0",
+  "description": "<<<<<<< HEAD\r for back to prevoius commit    git reset --hard <commit_hash>\r =======\r # expeideatravel\r >>>>>>> 9fbb225915ec4a54d8dd309bdc76a12f37e3c9fd",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  }
+}
