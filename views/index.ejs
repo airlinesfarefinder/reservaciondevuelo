@@ -2675,11 +2675,10 @@ background-color: #0071c2; color: white; text-decoration: none; border-radius: 6
                 <div class="modal fade show custompopup" style="display: block;">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content pt-0">
-                            <div class="modal-footer border-0">
-                                <p onclick="myFunction1()" class="btn-secondary">
-                                    <i class="fa fa-close " aria-hidden="true"></i>
-                                </p>
-                            </div>
+                            <!-- Close Button -->
+                            <button class="closePopup" onclick="closePopup()">
+                                <i class="fa fa-close" aria-hidden="true"></i>
+                            </button>
                             <div class="popup-content">
                                 <img alt="Logo" class="header-logo" loading="lazy" width="120" height="40"
                                     decoding="async" data-nimg="1" style="color:transparent" src="images/expedia.png">
@@ -2699,7 +2698,8 @@ background-color: #0071c2; color: white; text-decoration: none; border-radius: 6
                                             <li>Reserva de boletos</li>
                                             <li>Gestionar reserva</li>
                                             <li>Atención al cliente</li>
-                                            <li>Cancelación</li>
+                                            <li>Cancelaciones y Reembolsos</li>
+                                            <li>Cambios/Reprogramaciones Rápidos y Fáciles</li>
                                         </ul>
                                     </div>
                                     <div class="mt-3 call-offers">
@@ -2717,8 +2717,33 @@ background-color: #0071c2; color: white; text-decoration: none; border-radius: 6
             </div>
         </a>
     </div>
+<style> /* Style for the close button */
+    .closePopup {
+        position: absolute;
+        top: 30px;
+        right: 35px;
+        background-color: transparent;
+        color: #0a3788; /* Match your UI color */
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 20;
+    }
+    
+    .closePopup i {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    
+    .closePopup:hover {
+        color: #f00; /* Optional hover effect */
+    }
     
 
+    </style>
+   <script>function closePopup() {
+    var popup = document.getElementById("boxes");
+    popup.style.display = "none"; </script>
 
 
     <style>
@@ -3461,30 +3486,7 @@ background-color: #0071c2; color: white; text-decoration: none; border-radius: 6
 
 
 
-<style>
-    .closePopup {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: transparent;
-        color: #0a3788;
-        /* Match your UI color */
-        border: none;
-        font-size: 24px;
-        cursor: pointer;
-        z-index: 20;
-    }
 
-    .closePopup i {
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    .closePopup:hover {
-        color: #f00;
-        /* Optional hover effect */
-    }
-</style>
 <style>
     .image-slider-section .swiper {
         width: 100%;
