@@ -351,7 +351,7 @@
         }
     </style>
 
-<nav class="navbar">
+<nav class="navbar" style="width:auto" >
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -2668,8 +2668,10 @@ background-color: #0071c2; color: white; text-decoration: none; border-radius: 6
         }
     </style> -->
 
+<!-- popup content -->
 
-    <div id="boxes" class="col-sm-6 col-sm-offset-3">
+    <div id="boxes" class="col-sm-6 col-sm-offset-3"  
+        >
         <a href="tel:(888) 285-2767">
             <div class="d-block d-md-block d-lg-none">
                 <div class="modal fade show custompopup" style="display: block;">
@@ -2717,6 +2719,8 @@ background-color: #0071c2; color: white; text-decoration: none; border-radius: 6
             </div>
         </a>
     </div>
+
+
 <style> /* Style for the close button */
     .closePopup {
         position: absolute;
@@ -2741,9 +2745,13 @@ background-color: #0071c2; color: white; text-decoration: none; border-radius: 6
     
 
     </style>
-   <script>function closePopup() {
+   <script>
+   
+   function closePopup() {
     var popup = document.getElementById("boxes");
-    popup.style.display = "none"; </script>
+    popup.style.display = "none"; 
+    
+    </script>
 
 
     <style>
@@ -3548,7 +3556,8 @@ background-color: #0071c2; color: white; text-decoration: none; border-radius: 6
         return window.innerWidth <= 767; // Adjust breakpoint as needed
     }
 
-    // Function to show the popup after 15 seconds on mobile devices
+
+    //  Function to show the popup after 15 seconds on mobile devices
     function showPopupAfterDelay() {
         if (isMobileDevice()) {
             setTimeout(function () {
