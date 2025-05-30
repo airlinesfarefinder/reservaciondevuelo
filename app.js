@@ -40,6 +40,8 @@ app.get('/mx-flights', (req, res) => {
   res.render('mx-flights', { title: 'Flight Deals' });
 });
 
+
+
 app.get('/disclaimer', (req, res) => {
   res.render('disclaimer', { title: 'Disclaimer' });
 });
@@ -68,6 +70,7 @@ app.get('/sitemap.xml', (req, res) => {
 app.get('/mexico-flights', (req, res) => {
   res.render('mexicoflight', { title: 'Mexico Flights' });
 });
+
 
 app.get('/mx-flights', (req, res) => {
   res.render('mx-flights', { title: 'Flight Deals' });
