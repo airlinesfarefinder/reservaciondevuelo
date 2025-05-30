@@ -36,6 +36,10 @@ app.get('/us-flights', (req, res) => {
   res.render('travel', { title: 'Travel' });
 });
 
+app.get('/mx-flights', (req, res) => {
+  res.render('mx-flights', { title: 'Flight Deals' });
+});
+
 app.get('/disclaimer', (req, res) => {
   res.render('disclaimer', { title: 'Disclaimer' });
 });
@@ -65,6 +69,9 @@ app.get('/mexico-flights', (req, res) => {
   res.render('mexicoflight', { title: 'Mexico Flights' });
 });
 
+app.get('/mx-flights', (req, res) => {
+  res.render('mx-flights', { title: 'Flight Deals' });
+});
 
 
 // Autocomplete endpoint

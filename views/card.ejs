@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Routes - Responsive Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.visible {
+            transform: translateY(0);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header .subtitle {
+            color: #718096;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        /* Mobile First Layout */
+        .routes-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .flight-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .flight-card:active {
+            transform: scale(0.98);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .airline-logo {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #495057;
+            font-size: 0.8rem;
+        }
+
+        .route-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .airport {
+            text-align: center;
+            flex: 1;
+        }
+
+        .airport-code {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 0.25rem;
+        }
+
+        .airport-name {
+            color: #718096;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .flight-path {
+            display: flex;
+            align-items: center;
+            margin: 0 1rem;
+            position: relative;
+        }
+
+        .plane-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .flight-line {
+            position: absolute;
+            top: 50%;
+            left: -1rem;
+            right: -1rem;
+            height: 2px;
+            background: linear-gradient(90deg, #e2e8f0, #667eea, #e2e8f0);
+            z-index: 1;
+        }
+
+        .price-section {
+            text-align: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .airline-spirit {
+            background: #ffd700;
+            color: #333;
+        }
+
+        .airline-united {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .airline-latam {
+            background: #dc2626;
+            color: white;
+        }
+
+        /* Tablet Layout */
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .routes-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .flight-card {
+                padding: 1.5rem;
+            }
+
+            .airport-code {
+                font-size: 1.5rem;
+            }
+
+            .airport-name {
+                font-size: 0.85rem;
+            }
+
+            .price {
+                font-size: 1.6rem;
+            }
+
+            .plane-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Desktop Layout */
+        @media (min-width: 1024px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-menu {
+                display: flex;
+            }
+
+            .routes-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+
+            .flight-card {
+                padding: 2rem;
+            }
+
+            .flight-card:hover {
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            }
+
+            .airport-code {
+                font-size: 1.8rem;
+            }
+
+            .airport-name {
+                font-size: 0.9rem;
+            }
+
+            .price {
+                font-size: 1.8rem;
+            }
+
+            .plane-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .flight-path {
+                margin: 0 2rem;
+            }
+
+            .flight-line {
+                left: -2rem;
+                right: -2rem;
+            }
+        }
+
+        /* Large Desktop */
+        @media (min-width: 1440px) {
+            .routes-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Navigation Menu for Mobile */
+        @media (max-width: 767px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+        }
+
+        .nav-toggle {
+            display: none;
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading animation */
+        .flight-card {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .flight-card:nth-child(1) { animation-delay: 0.1s; }
+        .flight-card:nth-child(2) { animation-delay: 0.2s; }
+        .flight-card:nth-child(3) { animation-delay: 0.3s; }
+        .flight-card:nth-child(4) { animation-delay: 0.4s; }
+        .flight-card:nth-child(5) { animation-delay: 0.5s; }
+        .flight-card:nth-child(6) { animation-delay: 0.6s; }
+        .flight-card:nth-child(7) { animation-delay: 0.7s; }
+        .flight-card:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <!-- <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">✈️ FlightHub</div>
+            <button class="nav-toggle" id="nav-toggle">☰</button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#flights">Flights</a></li>
+                <li><a href="#deals">Deals</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav> -->
+
+    <div class="container">
+        <div class="header">
+            <h1>Flight Routes</h1>
+            <p class="subtitle">Domestic & International Destinations</p>
+        </div>
+        
+        <div class="routes-grid">
+            <!-- Flight 1 -->
+            <div class="flight-card" onclick="scrollToNav()">
+                <div class="card-header">
+                    <div class="airline-logo airline-spirit">NK</div>
+                </div>
+                <div class="route-info">
+                    <div class="airport">
+                        <div class="airport-code">RDU</div>
+                        <div class="airport-name">Raleigh Durham</div>
+                    </div>
+                    <div class="flight-path">
+                        <div class="flight-line"></div>
+                        <div class="plane-icon">✈</div>
+                    </div>
+                    <div class="airport">
+                        <div class="airport-code">ORD</div>
+                        <div class="airport-name">Orlando</div>
+                    </div>
+                </div>
+                <div class="price-section">
+                    <div class="price">$274.00</div>
+                </div>
+            </div>
+
+            <!-- Flight 2 -->
+            <div class="flight-card" onclick="scrollToNav()">
+                <div class="card-header">
+                    <div class="airline-logo airline-latam">LA</div>
+                </div>
+                <div class="route-info">
+                    <div class="airport">
+                        <div class="airport-code">SCL</div>
+                        <div class="airport-name">Santiago</div>
+                    </div>
+                    <div class="flight-path">
+                        <div class="flight-line"></div>
+                        <div class="plane-icon">✈</div>
+                    </div>
+                    <div class="airport">
+                        <div class="airport-code">PUQ</div>
+                        <div class="airport-name">Punta Arenas</div>
+                    </div>
+                </div>
+                <div class="price-section">
+                    <div class="price">$608.00</div>
+                </div>
+            </div>
+
+            <!-- Flight 3 -->
+            <div class="flight-card" onclick="scrollToNav()">
+                <div class="card-header">
+                    <div class="airline-logo airline-spirit">NK</div>
+                </div>
+                <div class="route-info">
+                    <div class="airport">
+                        <div class="airport-code">NYC</div>
+                        <div class="airport-name">New York</div>
+                    </div>
+                    <div class="flight-path">
+                        <div class="flight-line"></div>
+                        <div class="plane-icon">✈</div>
+                    </div>
+                    <div class="airport">
+                        <div class="airport-code">SLC</div>
+                        <div class="airport-name">Salt Lake City</div>
+                    </div>
+                </div>
+                <div class="price-section">
+                    <div class="price">$305.00</div>
+                </div>
+            </div>
+
+            <!-- Flight 4 -->
+            <div class="flight-card" onclick="scrollToNav()">
+                <div class="card-header">
+                    <div class="airline-logo airline-spirit">NK</div>
+                </div>
+                <div class="route-info">
+                    <div class="airport">
+                        <div class="airport-code">MEM</div>
+                        <div class="airport-name">Memphis</div>
+                    </div>
+                    <div class="flight-path">
+                        <div class="flight-line"></div>
+                        <div class="plane-icon">✈</div>
+                    </div>
+                    <div class="airport">
+                        <div class="airport-code">LAS</div>
+                        <div class="airport-name">Las Vegas</div>
+                    </div>
+                </div>
+                <div class="price-section">
+                    <div class="price">$707.00</div>
+                </div>
+            </div>
+
+            <!-- Flight 5 -->
+            <div class="flight-card" onclick="scrollToNav()">
+                <div class="card-header">
+                    <div class="airline-logo airline-united">UA</div>
+                </div>
+                <div class="route-info">
+                    <div class="airport">
+                        <div class="airport-code">ORL</div>
+                        <div class="airport-name">Orlando</div>
+                    </div>
+                    <div class="flight-path">
+                        <div class="flight-line"></div>
+                        <div class="plane-icon">✈</div>
+                    </div>
+                    <div class="airport">
+                        <div class="airport-code">NYC</div>
+                        <div class="airport-name">New York</div>
+                    </div>
+                </div>
+                <div class="price-section">
+                    <div class="price">$271.22</div>
+                </div>
+            </div>
+
+            <!-- Flight 6 -->
+            <div class="flight-card" onclick="scrollToNav()">
+                <div class="card-header">
+                    <div class="airline-logo airline-united">UA</div>
+                </div>
+                <div class="route-info">
+                    <div class="airport">
+                        <div class="airport-code">ACY</div>
+                        <div class="airport-name">Atlantic City</div>
+                    </div>
+                    <div class="flight-path">
+                        <div class="flight-line"></div>
+                        <div class="plane-icon">✈</div>
+                    </div>
+                    <div class="airport">
+                        <div class="airport-code">ORL</div>
+                        <div class="airport-name">Orlando</div>
+                    </div>
+                </div>
+                <div class="price-section">
+                    <div class="price">$638.00</div>
+                </div>
+            </div>
+
+
+            <!-- Flight 7 -->
+<div class="flight-card" onclick="scrollToNav()">
+    <div class="card-header">
+        <div class="airline-logo airline-united">DL</div>
+    </div>
+    <div class="route-info">
+        <div class="airport">
+            <div class="airport-code">JFK</div>
+            <div class="airport-name">New York</div>
+        </div>
+        <div class="flight-path">
+            <div class="flight-line"></div>
+            <div class="plane-icon">✈</div>
+        </div>
+        <div class="airport">
+            <div class="airport-code">LAX</div>
+            <div class="airport-name">Los Angeles</div>
+        </div>
+    </div>
+    <div class="price-section">
+        <div class="price">$482.00</div>
+    </div>
+</div>
+
+
+<!-- Flight 8 -->
+<div class="flight-card" onclick="scrollToNav()">
+    <div class="card-header">
+        <div class="airline-logo airline-latam">AA</div>
+    </div>
+    <div class="route-info">
+        <div class="airport">
+            <div class="airport-code">ORD</div>
+            <div class="airport-name">Chicago O'Hare</div>
+        </div>
+        <div class="flight-path">
+            <div class="flight-line"></div>
+            <div class="plane-icon">✈</div>
+        </div>
+        <div class="airport">
+            <div class="airport-code">MIA</div>
+            <div class="airport-name">Miami</div>
+        </div>
+    </div>
+    <div class="price-section">
+        <div class="price">$329.00</div>
+    </div>
+</div>
+
+
+
+         
+
+          
+        </div>
+    </div>
+
+    <script>
+        // Mobile navigation toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Function to scroll to navigation bar when card is clicked
+        function scrollToNav() {
+            const navbar = document.getElementById('navbar');
+            navbar.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Add touch feedback for mobile
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.flight-card').forEach(card => {
+                card.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                card.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
